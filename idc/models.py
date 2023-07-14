@@ -5,6 +5,8 @@ from django.db import models
 # Child of Central-->Model-->Cable
 class CableInventory(models.Model):
     cable = models.ForeignKey('central.Cable', on_delete=models.DO_NOTHING)
+    cable_name = models.CharField(max_length=255)
+    sku = models.CharField(max_length=255)
 
     # In Stock
     previous_quantity = models.PositiveIntegerField(editable=False)
@@ -23,6 +25,8 @@ class CableInventory(models.Model):
             # Object is new, so we don't have a history yet
             self.previous_quantity = 0
             self.previous_on_order = 0
+            self.sku = self.cable.sku
+            self.cable_name = self.cable.name
 
             super().save(*args, **kwargs)
         else:
@@ -37,6 +41,8 @@ class CableInventory(models.Model):
 
             self.previous_quantity = self.quantity
             self.previous_on_order = self.on_order
+            self.sku = self.cable.sku
+            self.cable_name = self.cable.name
 
             super().save(*args, **kwargs)
 

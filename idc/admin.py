@@ -12,9 +12,10 @@ class CableInventoryAdmin(admin.ModelAdmin):
         'on_order',
     )
 
-    # readonly_fields = (
-    #     'cable',
-    # )
+    readonly_fields = (
+        'sku',
+        'cable_name',
+    )
 
     def on_hand(self, obj):
         if obj.quantity < 5:
